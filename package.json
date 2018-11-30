@@ -1,0 +1,48 @@
+{
+  "name": "working-hardly",
+  "version": "1.0.0",
+  "description": "Moves your mouse every N seconds.",
+  "main": "index.js",
+  "bin": {
+    "workinghardly": "./cli.js"
+  },
+  "scripts": {
+    "predev": "eslint .",
+    "dev": "npm start",
+    "dev-nodemon": "nodemon . --exec \"npm run start\"",
+    "nodemon": "nodemon . --exec \"npm run start\"",
+    "start": "node cli.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postversion": "git push && git push --tags && npm publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VictorioBerra/working-hardly.git"
+  },
+  "keywords": [
+    "skype",
+    "mousemove",
+    "keep",
+    "awake",
+    "prevent",
+    "sleep"
+  ],
+  "author": {
+    "name": "Victorio Berra",
+    "email": "toryberra@gmail.com"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VictorioBerra/working-hardly/issues"
+  },
+  "homepage": "https://github.com/VictorioBerra/working-hardly#readme",
+  "dependencies": {
+    "commander": "^2.19.0",
+    "robotjs": "^0.5.1",
+    "winston": "^3.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.9.0",
+    "nodemon": "^1.18.7"
+  }
+}
