@@ -7,11 +7,9 @@
     "workinghardly": "./cli.js"
   },
   "scripts": {
-    "predev": "eslint .",
-    "dev": "npm start",
-    "dev-nodemon": "nodemon . --exec \"npm run start\"",
     "nodemon": "nodemon . --exec \"npm run start\"",
     "start": "node cli.js",
+    "pretest": "eslint .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "postversion": "git push && git push --tags && npm publish"
   },
