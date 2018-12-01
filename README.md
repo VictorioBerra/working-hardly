@@ -15,7 +15,8 @@ Can also type a key instead of move the mouse. Run --help to see all options.
 ```
 Options:
   -V, --version           output the version number
-  -i, --interval [value]  How many seconds between mouse movements [240] (default: 14400)  -f, --f15instead        Hit F15 instead of moving the mouse
+  -i, --interval [value]  How many seconds between mouse movements [240] (default: 14400)
+  -f, --f15instead        Hit F15 instead of moving the mouse
   -k, --key [value]       Provide a keep awake key.
   -r, --run               Run immediately
   -h, --help              output usage information
