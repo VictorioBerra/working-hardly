@@ -15,7 +15,7 @@ const logger = winston.createLogger({
     ]
 });
 
-const defaultActionInterval = 240 * 60;
+const defaultActionInterval = 240 * 1000;
 
 program
     .version('1.0.0')
@@ -34,7 +34,7 @@ logger.log('info', 'Moving the mouse every %s seconds.', program.interval);
 
 setInterval(function(){
     keepPCAwakeAction();
-}, program.interval);
+}, program.interval * 1000);
 
 function keepPCAwakeAction() {
 
