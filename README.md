@@ -8,6 +8,8 @@ Can also type a key instead of move the mouse. Run --help to see all options.
 
 `npm i working-hardly` (or use `npx`)
 
+If you have any errors from node-gyp, you may need to do this: https://github.com/octalmage/robotjs#building
+
 ## Usage
 
 `workinghardly`
