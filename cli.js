@@ -7,6 +7,7 @@ const winston = require('winston');
 const logger = winston.createLogger({
     level: 'info',
     format: winston.format.combine(
+        winston.format.timestamp(),
         winston.format.splat(),
         winston.format.simple()
     ),
@@ -30,11 +31,11 @@ if(program.run) {
     keepPCAwakeAction();
 }
 
-logger.log('info', 'Moving the mouse every %s seconds.', program.interval);
+logger.log('info', 'Moving the mouse every %s seconds.', program.interval / 1000);
 
 setInterval(function(){
     keepPCAwakeAction();
-}, program.interval * 1000);
+}, program.interval);
 
 function keepPCAwakeAction() {
 
@@ -55,6 +56,8 @@ function keepPCAwakeAction() {
     let screenSize = robot.getScreenSize();
     let height = (screenSize.height / 2) - 10;
     let width = screenSize.width;
+
+    logger.log('info', 'Moving mouse.');
 
     robot.moveMouse(width, height);
     robot.moveMouseSmooth(width / 2, height);
