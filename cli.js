@@ -17,10 +17,11 @@ const logger = winston.createLogger({
 });
 
 const defaultActionInterval = 240;
+const minInterval = 15;
 
 program
     .version('1.0.0')
-    .option('-i, --interval [value]', 'How many seconds between mouse movements [240]', tryParseInt(defaultActionInterval), defaultActionInterval)
+    .option('-i, --interval [value]', `How many seconds between mouse movements [240] (must be greater than ${minInterval})`, tryParseInt(defaultActionInterval), defaultActionInterval)
     .option('-f, --f15instead', 'Hit F15 instead of moving the mouse')
     .option('-k, --key [value]', 'Provide a keep awake key')
     .option('-n, --noskip', 'do not skip movement if the mouse has changed position between last runs')
@@ -28,7 +29,12 @@ program
     .parse(process.argv);
 
 let lastKnownPosition = robot.getMousePos();
-    
+
+if(program.interval <= minInterval) {
+    logger.log('error', 'Interval is too small. The mouse could still be moving.');
+    process.exit(1);
+}
+
 if(program.run) {
     logger.log('info', 'Running action now.');
     keepPCAwakeAction();
@@ -64,6 +70,7 @@ function keepPCAwakeAction() {
         if(lastKnownPosition.x !== currentPosition.x ||
             lastKnownPosition.y !== currentPosition.y) {
             logger.log('info', 'The mouse appears to have moved since we last ran, skipping movement.');
+            lastKnownPosition = robot.getMousePos();
             return;
         }
     } else {
@@ -76,6 +83,7 @@ function keepPCAwakeAction() {
 
     logger.log('info', 'Moving mouse.');
 
+    robot.moveMouse(screenSize.width, desiredHeight);
     robot.moveMouseSmooth(desiredWidth, desiredHeight);
 
     lastKnownPosition = robot.getMousePos();
