@@ -1,6 +1,6 @@
 {
   "name": "working-hardly",
-  "version": "4.0.2",
+  "version": "4.1.0",
   "description": "Moves your mouse every N seconds.",
   "main": "index.js",
   "bin": {
