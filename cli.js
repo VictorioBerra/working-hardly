@@ -3,6 +3,7 @@
 const program = require('commander');
 const robot = require('robotjs');
 const winston = require('winston');
+const rfr = require('rfr');
 
 const logger = winston.createLogger({
     level: 'info',
@@ -20,7 +21,7 @@ const defaultActionInterval = 240;
 const minInterval = process.env.WORKINGHARDLY_MININTERVAL || 15;
 
 program
-    .version('1.0.0')
+    .version(rfr('./package.json').version)
     .option('-i, --interval [value]', `How many seconds between mouse movements [240] (must be greater than ${minInterval})`, tryParseInt(defaultActionInterval), defaultActionInterval)
     .option('-f, --f15instead', 'Hit F15 instead of moving the mouse')
     .option('-k, --key [value]', 'Provide a keep awake key')
