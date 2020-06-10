@@ -16,26 +16,31 @@ const logger = winston.createLogger({
     ]
 });
 
-const defaultActionInterval = 240 * 1000;
+const defaultActionInterval = 240;
 
 program
     .version('1.0.0')
     .option('-i, --interval [value]', 'How many seconds between mouse movements [240]', tryParseInt(defaultActionInterval), defaultActionInterval)
     .option('-f, --f15instead', 'Hit F15 instead of moving the mouse')
     .option('-k, --key [value]', 'Provide a keep awake key.')
+    .option('-f, --force', 'do not skip movement if the mouse has changed position between last runs..')
     .option('-r, --run', 'Run immediately')
     .parse(process.argv);
 
+let lastKnownPosition = robot.getMousePos();
+    
 if(program.run) {
     logger.log('info', 'Running action now.');
     keepPCAwakeAction();
 }
 
-logger.log('info', 'Moving the mouse every %s seconds.', program.interval / 1000);
+const movementIntervalInSeconds = program.interval * 1000;
+
+logger.log('info', 'Moving the mouse every %s seconds.', movementIntervalInSeconds / 1000);
 
 setInterval(function(){
     keepPCAwakeAction();
-}, program.interval);
+}, movementIntervalInSeconds);
 
 function keepPCAwakeAction() {
 
@@ -53,14 +58,27 @@ function keepPCAwakeAction() {
         return;
     }
 
-    let screenSize = robot.getScreenSize();
-    let height = (screenSize.height / 2) - 10;
-    let width = screenSize.width;
+    const currentPosition = robot.getMousePos();
+    // Do not move mouse if its moved recently
+    if(!program.force) {
+        if(lastKnownPosition.x !== currentPosition.x ||
+            lastKnownPosition.y !== currentPosition.y) {
+            logger.log('info', 'The mouse appears to have moved since we last ran, skipping movement.');
+            return;
+        }
+    } else {
+        logger.log('info', 'Skipping mouse position check.');
+    }
+
+    const screenSize = robot.getScreenSize();
+    const desiredHeight = (screenSize.height / 2) - 10;
+    const desiredWidth = screenSize.width / 2;
 
     logger.log('info', 'Moving mouse.');
 
-    robot.moveMouse(width, height);
-    robot.moveMouseSmooth(width / 2, height);
+    robot.moveMouseSmooth(desiredWidth, desiredHeight);
+
+    lastKnownPosition = robot.getMousePos();
 }
 
 
