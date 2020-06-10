@@ -17,9 +17,10 @@ If you have any errors from node-gyp, you may need to do this: https://github.co
 ```
 Options:
   -V, --version           output the version number
-  -i, --interval [value]  How many seconds between mouse movements [240] (default: 14400)
+  -i, --interval [value]  How many seconds between mouse movements [240] (default: 240)
   -f, --f15instead        Hit F15 instead of moving the mouse
-  -k, --key [value]       Provide a keep awake key.
+  -k, --key [value]       Provide a keep awake key
+  -n, --noskip            do not skip movement if the mouse has changed position between last runs
   -r, --run               Run immediately
   -h, --help              output usage information
 ```

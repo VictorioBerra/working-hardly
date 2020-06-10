@@ -22,8 +22,8 @@ program
     .version('1.0.0')
     .option('-i, --interval [value]', 'How many seconds between mouse movements [240]', tryParseInt(defaultActionInterval), defaultActionInterval)
     .option('-f, --f15instead', 'Hit F15 instead of moving the mouse')
-    .option('-k, --key [value]', 'Provide a keep awake key.')
-    .option('-f, --force', 'do not skip movement if the mouse has changed position between last runs..')
+    .option('-k, --key [value]', 'Provide a keep awake key')
+    .option('-n, --noskip', 'do not skip movement if the mouse has changed position between last runs')
     .option('-r, --run', 'Run immediately')
     .parse(process.argv);
 
@@ -60,7 +60,7 @@ function keepPCAwakeAction() {
 
     const currentPosition = robot.getMousePos();
     // Do not move mouse if its moved recently
-    if(!program.force) {
+    if(!program.noskip) {
         if(lastKnownPosition.x !== currentPosition.x ||
             lastKnownPosition.y !== currentPosition.y) {
             logger.log('info', 'The mouse appears to have moved since we last ran, skipping movement.');
