@@ -17,7 +17,7 @@ const logger = winston.createLogger({
 });
 
 const defaultActionInterval = 240;
-const minInterval = 15;
+const minInterval = process.env.WORKINGHARDLY_MININTERVAL || 15;
 
 program
     .version('1.0.0')
