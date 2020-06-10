@@ -31,7 +31,7 @@ program
 let lastKnownPosition = robot.getMousePos();
 
 if(program.interval <= minInterval) {
-    logger.log('error', 'Interval is too small. The mouse could still be moving.');
+    logger.log('error', `Interval is too small. The mouse could still be moving. Choose and interval above ${minInterval}`;
     process.exit(1);
 }
 
